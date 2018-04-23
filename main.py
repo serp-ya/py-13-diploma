@@ -1,6 +1,5 @@
 from VkWorker import VkWorker
 import json
-import os
 
 def core():
     result_file_name = 'result.json'
