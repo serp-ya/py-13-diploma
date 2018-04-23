@@ -24,6 +24,12 @@ def core():
         groups_response = vk_worker.get_groups()
         groups_list = groups_response['response']['items']
 
+
+        friends_count = friends_response['response']['count']
+        groups_count = groups_response['response']['count']
+        print('friends_count', friends_count)
+        print('groups_count', groups_count)
+
         result = list()
 
 
