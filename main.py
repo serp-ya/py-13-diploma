@@ -3,12 +3,10 @@ import json
 import os
 
 def core():
+    result_file_name = 'result.json'
     print('Введите желаемый id пользователя')
     print('(Для выхода введите C)')
     entered_value = input()
-
-    print('entered_value', entered_value)
-    print('entered_value', bool(entered_value))
 
     if entered_value.lower() == 'c':
         return
@@ -28,6 +26,7 @@ def core():
 
         result = list()
 
+
         for group_id in groups_list:
             print(f'Группа {group_id} на проверке')
             has_friends = vk_worker.detect_friend(group_id, friends_list)
@@ -35,8 +34,10 @@ def core():
             if not has_friends:
                 result.append(group_id)
 
-        with open('result.json', 'w', encoding='utf-8') as res:
+        with open(result_file_name, 'w', encoding='utf-8') as res:
             print(json.dumps(result), file=res)
+            print(f'Результат записан в файл {result_file_name}\n')
+
 
     except:
         print('Не корректные данные')
@@ -45,4 +46,4 @@ def core():
 
 
 if __name__ == '__main__':
-    core();
+    core()
