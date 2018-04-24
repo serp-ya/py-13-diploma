@@ -12,8 +12,20 @@ class VkWorker:
         'v': '5.74',
     }
 
-    def __init__(self, user_id):
-        self.user_id = user_id
+    def __init__(self, dirty_user_id):
+        striped_user_id = dirty_user_id.strip()
+        valid_user_id = striped_user_id
+
+        if not valid_user_id.isdecimal():
+            params = self.params.copy()
+            params['user_ids'] = valid_user_id
+
+            valid_user_id = requests.get(
+                self.formatted_url('users.get'),
+                params=params
+            ).json()['response'][0]['id']
+
+        self.user_id = valid_user_id
 
 
     def formatted_url(self, method_name):
