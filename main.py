@@ -2,6 +2,10 @@ from VkWorker import VkWorker
 import json
 
 
+def to_fixed(number):
+    return'{:.2f}'.format(number)
+
+
 def group_object_factory(group):
     return {
         'name': group['name'],
@@ -11,7 +15,7 @@ def group_object_factory(group):
 
 
 def core():
-    result_file_name = 'result.json'
+    result_file_name = 'groups.json'
     print('Введите желаемый id пользователя')
     print('(Для выхода введите C)')
     entered_value = input()
@@ -44,9 +48,10 @@ def core():
 
             result = list()
 
-            for group in groups_list:
+            for i, group in enumerate(groups_list):
                 group_id = group['id']
 
+                print(f'Прогресс {to_fixed(i / len(groups_list) * 100)}%')
                 print(f'Группа {group_id} на проверке')
                 has_friends = vk_worker.detect_friend(group_id, friends_list)
 
