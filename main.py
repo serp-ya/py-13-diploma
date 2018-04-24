@@ -1,6 +1,15 @@
 from VkWorker import VkWorker
 import json
 
+
+def group_object_factory(group):
+    return {
+        'name': group['name'],
+        'gid': group['id'],
+        'members_count': group['members_count'],
+    }
+
+
 def core():
     result_file_name = 'result.json'
     print('Введите желаемый id пользователя')
@@ -22,24 +31,31 @@ def core():
             groups_response = vk_worker.get_groups()
             groups_list = groups_response['response']['items']
 
-
+            # Для демонстрации
+            # START
+            print('\n############### Для демонстрации')
             friends_count = friends_response['response']['count']
             groups_count = groups_response['response']['count']
             print('friends_count', friends_count)
             print('groups_count', groups_count)
+            print('############### Для демонстрации\n')
+            # END
+            # Для демонстрации
 
             result = list()
 
+            for group in groups_list:
+                group_id = group['id']
 
-            for group_id in groups_list:
                 print(f'Группа {group_id} на проверке')
                 has_friends = vk_worker.detect_friend(group_id, friends_list)
 
                 if not has_friends:
-                    result.append(group_id)
+                    group_object = group_object_factory(group)
+                    result.append(group_object)
 
-            with open(result_file_name, 'w', encoding='utf-8') as res:
-                print(json.dumps(result), file=res)
+            with open(result_file_name, 'w', encoding='utf-8') as res_file:
+                print(json.dumps(result), file=res_file)
                 print(f'Результат записан в файл {result_file_name}\n')
 
 
@@ -49,6 +65,7 @@ def core():
 
     except:
         print('Возникла ошибка, попробуйте ещё раз')
+
 
     return core()
 
