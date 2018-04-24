@@ -1,4 +1,3 @@
-from urllib.parse import urlencode
 import requests
 import math
 import time
