@@ -38,6 +38,10 @@ class VkWorker:
         params = self.params.copy()
         params['user_id'] = self.user_id
 
+        if method_name == 'groups.get':
+            params['fields'] = 'members_count'
+            params['extended'] = 1
+
         return requests.get(method_url, params=params).json()
 
 
@@ -67,6 +71,8 @@ class VkWorker:
             params_of_part['user_ids'] = ','.join(map(str, user_ids_part))
 
             detect_response = requests.get(method_url, params=params_of_part).json()
+            time.sleep(0.35)
+
             detect__users = detect_response['response']
 
             friends_in_group = [*filter(
@@ -76,10 +82,6 @@ class VkWorker:
 
             if len(friends_in_group) > 0:
                 result = True
-                time.sleep(0.35)
                 break
-
-            elif i < iterations - 1:
-                time.sleep(0.35)
 
         return result
