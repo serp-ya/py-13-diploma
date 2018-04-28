@@ -6,8 +6,7 @@ import time
 class VkWorker:
     api_url = 'https://api.vk.com/method'
     params = {
-        'access_token': '1fba8861513553efb45c7951a97ddeffb3b5534097126ca538b93' \
-                        'fd5f32d80818ac9b2a1972b5971c0e41',
+        'access_token': '7b23e40ad10e08d3b7a8ec0956f2c57910c455e886b480b7d9fb59859870658c4a0b8fdc4dd494db19099',
         'v': '5.74',
     }
 
